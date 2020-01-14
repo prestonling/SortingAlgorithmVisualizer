@@ -66,9 +66,7 @@ export default class SortingVisualizer extends React.Component {
 					//change to 
 					else if(i % 4 === 3){
 						color = 'black';
-						console.log("color reverted back to black");
 					}
-					console.log("should be changing colours");
 					barOneStyle.backgroundColor = color;
 					barTwoStyle.backgroundColor = color;
 				}, i * 50);
@@ -84,7 +82,7 @@ export default class SortingVisualizer extends React.Component {
 	bubbleSort(){
 		const {array} = this.state;
 		const animations = getBubbleSortAnimations(array);
-		console.log(animations.length);
+		
 
 		for(let i = 0; i < animations.length; i++){
 			const arrayBars = document.getElementsByClassName('array-bar');
@@ -93,15 +91,20 @@ export default class SortingVisualizer extends React.Component {
   			const secondSwitchAnimation = (i % 4 === 2);
 
   			if (firstSwitchAnimation || secondSwitchAnimation){
-  				const [barIdx, newValue] = animations[i];
-  				const bar = arrayBars[barIdx];
+  				
   				//array is being fully changed
   				//before bars can show animations
   				setTimeout(() => {
+  					console.log(this.state.array);
+  					const [barIdx, newValue] = animations[i];
+  					const bar = arrayBars[barIdx];
   					bar.style.height = `${newValue}px`;
   					bar.innerHTML = `${newValue}`
   					array[barIdx] = newValue;
   					this.setState({array});
+  					if(secondSwitchAnimation){
+  						console.log(array);
+  					}
   				}, i * 50);
   				
 
@@ -123,9 +126,7 @@ export default class SortingVisualizer extends React.Component {
 					//change to 
 					else if(i % 4 === 3){
 						color = 'black';
-						console.log("color reverted back to black");
 					}
-					console.log("should be changing colours");
 					barOneStyle.backgroundColor = color;
 					barTwoStyle.backgroundColor = color;
 				}, i * 50);
@@ -136,10 +137,8 @@ export default class SortingVisualizer extends React.Component {
 	}
 
 	//PROBLEMS
-	//auxBarOneStyle is changing with BarOneStyle
-	//In Javascript, when a variable to assigned to an object
-	//a reference is passed to it.
-	//only primitive types are not references
+	//comparisons of left and right bars for bubble sort is
+	//not correct 
 
 	//arrays already contain the values of each bar, so just 
 	//update the array 

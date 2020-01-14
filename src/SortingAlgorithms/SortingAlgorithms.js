@@ -67,9 +67,7 @@ export function getBubbleSortAnimations(array){
 	const auxArray = array.slice(); 
 	//go to second last index for first run of bubble sort
 	for(let i = array.length - 2; i > 0; i --){
-		for(let j = 0; j <= i; i ++){
-			
-
+		for(let j = 0; j <= i; j ++){
 			//push indexes of bars we are comparing
 			//these bars will turn green
 			animations.push([j, j+1]);
@@ -82,9 +80,11 @@ export function getBubbleSortAnimations(array){
 				animations.push([j, auxArray[j+1]]);
 				animations.push([j+1, auxArray[j]]);
 
-				var b = auxArray[i];
-				auxArray[i] = auxArray[i+1];
-				auxArray[i+1] = b; 
+				var b = auxArray[j];
+				auxArray[j] = auxArray[j+1];
+				auxArray[j+1] = b; 
+				console.log(j);
+				console.log(auxArray);
 			}
 			else{
 				animations.push([j, auxArray[j]]);
@@ -94,9 +94,12 @@ export function getBubbleSortAnimations(array){
 			//push the indexes of compared bars
 			//these bars will revert back to black
 			animations.push([j, j+1]);
+			
 
 		}
 	}
+	console.log("finished pushing animations");
+	return animations;
 }
 
 //should only need array as parameter 
