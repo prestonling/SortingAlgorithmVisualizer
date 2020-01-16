@@ -131,10 +131,22 @@ export default class SortingVisualizer extends React.Component {
 					barTwoStyle.backgroundColor = color;
 				}, i * 50);
 			}
-
-
 		}
 	}
+
+
+	//make splitting animation in mergeSort(), not returned from animations
+	//need to make splitting animations a recursive call (will make it easier)
+	mergeSort(){
+		const {array} = this.state;
+
+		const arrayBars = document.getElementsByClassName('array-bar');
+		splittingAnimation(arrayBars);
+
+
+	}
+
+	
 
 	//PROBLEMS
 	//comparisons of left and right bars for bubble sort is
@@ -195,5 +207,40 @@ export default class SortingVisualizer extends React.Component {
 function randomIntFromInterval(min, max) {
   // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+//recursive call breaks 
+var splittingAnimation = function split(arrayBars){
+	console.log(arrayBars);
+	if(arrayBars.length === 1){
+		return;
+	}
+	setTimeout(() => {
+		const splitIndex = Math.floor((arrayBars.length - 1)/2);
+
+		const middleBar = arrayBars[splitIndex];
+		console.log(middleBar);
+		const newSpacing = 20;
+		const middleBarStyle = middleBar.style;
+		console.log(middleBarStyle);
+		middleBar.style.marginRight = `${newSpacing}px`;
+
+		const leftGroup = [];
+		for(let i = 0; i <= splitIndex; i++){
+			leftGroup.push(arrayBars[i]);
+			console.log(arrayBars[i]);
+		}
+		console.log(leftGroup);
+
+		const rightGroup = [];
+		for(let i = splitIndex + 1; i < arrayBars.length; i ++){
+			rightGroup.push(arrayBars[i]);
+		}
+
+		split(leftGroup);
+		return split(rightGroup);
+	}, 1000)
+
 }
 

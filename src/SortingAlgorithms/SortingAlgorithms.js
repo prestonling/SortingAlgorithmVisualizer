@@ -4,34 +4,6 @@
 
 // }
 
-//if you want to do bubble sort, how would we implement it knowing about
-//pass-by-reference?
-
-//implement switchbars here, then work on bubblesort
-
-// switchBars(array, arrayBars){
-// 	const auxArray = array.slice();
-// 	const arrayBars = document.getElementsByClassName('array-bar');
-// 	const {index} = this.state;
-// 	console.log(index);
-	
-// 	const barOneStyle = arrayBars[index].style;
-// 	const barTwoStyle = arrayBars[index+1].style;
-// 	barOneStyle.height = `${array[index+1]}px`;
-// 	barTwoStyle.height = `${array[index]}px`;
-
-
-// 	//update state array with array with switched values
-// 	auxArray[index] = array[index+1];
-// 	auxArray[index+1] = array[index];
-
-// 	this.setState({
-// 		index: index + 1,
-// 		array: auxArray
-// 	});
-
-// }
-
 export function getSwitchBarsAnimations(array){
 	const animations = [];
 	const auxArray = array.slice();
@@ -62,6 +34,8 @@ export function getSwitchBarsAnimations(array){
 
 }
 
+//may need to switch 
+
 export function getBubbleSortAnimations(array){
 	const animations = [];
 	const auxArray = array.slice(); 
@@ -83,8 +57,6 @@ export function getBubbleSortAnimations(array){
 				var b = auxArray[j];
 				auxArray[j] = auxArray[j+1];
 				auxArray[j+1] = b; 
-				console.log(j);
-				console.log(auxArray);
 			}
 			else{
 				animations.push([j, auxArray[j]]);
@@ -102,23 +74,19 @@ export function getBubbleSortAnimations(array){
 	return animations;
 }
 
-//should only need array as parameter 
-//-so we use array indexes as values to return
-//for animation array
-//
+//function getMergeSortAnimations
 
-//bubblesort 
-//need to compare indexes to see if left is greater than right
-//and if so, switch them
+//work on merge sort
+//-want merge sort to be merge sort visually, with the bars being split
+//correctly
+//will need to make a space between the groups of bars
+//-animations will be fundamentally different than that of
+//bubble sort (i think)
+//-leave splitting animations to SortingVisualizer, 
 
-//in terms of animations, we can't just have the same pattern
-//as switch bars
-//switchbars has 4 items per cycle
-//-2 for changing the color, and 2 for switching values/height
-
-//bubblesort will also only need 4, but do we keep 
-
-
-
-//what if we returned an array of what indexes were compared?
-//we could just check the values at each index 
+//animation:
+//-keep dividing bars into 2 groups until every group only has 1 member
+//	-will need to add a rectangle that is the same color as the 
+//	background?
+//	or just space the rectangles with consistent spacing
+//	use css style element "margin"
