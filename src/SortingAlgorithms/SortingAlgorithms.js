@@ -75,7 +75,62 @@ export function getBubbleSortAnimations(array){
 }
 
 //function getMergeSortAnimations
+//make it a recursive function
 
+function getMergeSortAnimations(array){
+	const animations = [];
+	mergeSortAnimationHelper(array, animations);
+	return animations;
+}
+
+function mergeSortAnimationHelper(array, animations){
+	// if (array.length <= 1){
+	// 	const currentArrayandAnimations =[];
+	// 	currentArrayandAnimations.push(array);
+	// 	currentArrayandAnimations.push(animations);
+	// 	return currentArrayandAnimations;
+	// }
+
+	// const middleIndex = Math.floor(array.length()/2);
+	// const auxArray = array.slice();
+	// const leftArray = auxArray.slice(0,middleIndex);
+	// const rightArray = auxArray.slice(middleIndex,);
+
+	// //returns the sorted array and animations respectively in one array
+	// const leftArrayandAnimations = mergeSortAnimationHelper(leftArray, animations);
+	// const rightArrayandAnimations = mergeSortAnimationHelper(rightArray, animations);
+
+	// //index 0 has the current sorted array and array 1 has the current animations
+	// const leftCurrentSortedArray = leftArrayandAnimations[0];
+	// const rightCurrentSortedArray = rightArrayandAnimations[0];
+	// const leftIndex = 0;
+	// const rightIndex = 0;
+	// const mergedArray = [];
+
+	// //XCurrentSortedArray is an array of value index pairs repsectively
+	// //index 0: value, index 1: index
+	// while(leftIndex < leftCurrentSortedArray.length || rightIndex < rightCurrentSortedArray){
+
+	// 	//i
+	// 	if (leftCurrentSortedArray[leftIndex][0] <= rightCurrentSortedArray[rightIndex][0]){
+	// 		//if the left value has an index that is less than the right value,
+	// 		//it is already in the right place in the in place array.
+	// 		if(leftCurrentSortedArray[leftIndex][1] < rightCurrentSortedArray[rightIndex][1]){
+
+	// 			//push the value index pair into the merged array and 
+	// 			//do not switch the index's for the compared values
+	// 			mergedArray.push(leftCurrentSortedArray[leftIndex]);
+	// 			animations.push
+
+	// 		}
+	// 	}
+	// }
+
+
+}
+
+//ANIMATIONS
+//1.)push index of leftmost bar in the group
 //work on merge sort
 //-want merge sort to be merge sort visually, with the bars being split
 //correctly

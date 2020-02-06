@@ -137,13 +137,23 @@ export default class SortingVisualizer extends React.Component {
 
 	//make splitting animation in mergeSort(), not returned from animations
 	//need to make splitting animations a recursive call (will make it easier)
+
+
+	//IN PLACE MERGESORT
+	//keep track of both value and index 
 	mergeSort(){
 		const {array} = this.state;
+		const valueindexarray = [];
+		for (let i = 0; i < array.length; i++){
+			const valueindexpairs = [array[i], i];
+			valueindexarray.push(valueindexpairs);
+		}
 
 		const arrayBars = document.getElementsByClassName('array-bar');
 		splittingAnimation(arrayBars);
 
-
+		//with animations array, remember to put arrays that are being
+		//compared together (make margin 0 or 1 )
 	}
 
 	
@@ -210,9 +220,9 @@ function randomIntFromInterval(min, max) {
 }
 
 
-//recursive call breaks 
+//animation works, but both sides split at the 
+//same time
 var splittingAnimation = function split(arrayBars){
-	console.log(arrayBars);
 	if(arrayBars.length === 1){
 		return;
 	}
@@ -220,18 +230,14 @@ var splittingAnimation = function split(arrayBars){
 		const splitIndex = Math.floor((arrayBars.length - 1)/2);
 
 		const middleBar = arrayBars[splitIndex];
-		console.log(middleBar);
 		const newSpacing = 20;
 		const middleBarStyle = middleBar.style;
-		console.log(middleBarStyle);
 		middleBar.style.marginRight = `${newSpacing}px`;
 
 		const leftGroup = [];
 		for(let i = 0; i <= splitIndex; i++){
 			leftGroup.push(arrayBars[i]);
-			console.log(arrayBars[i]);
 		}
-		console.log(leftGroup);
 
 		const rightGroup = [];
 		for(let i = splitIndex + 1; i < arrayBars.length; i ++){
@@ -239,7 +245,7 @@ var splittingAnimation = function split(arrayBars){
 		}
 
 		split(leftGroup);
-		return split(rightGroup);
+		split(rightGroup);
 	}, 1000)
 
 }
