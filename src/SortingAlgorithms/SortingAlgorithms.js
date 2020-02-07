@@ -71,60 +71,198 @@ export function getBubbleSortAnimations(array){
 		}
 	}
 	console.log("finished pushing animations");
+	console.log("test initializing empty array with empty array");
+	const testarray = [];
+	testarray.push(testarray);
+	console.log(testarray);
 	return animations;
 }
 
 //function getMergeSortAnimations
 //make it a recursive function
 
-function getMergeSortAnimations(array){
-	const animations = [];
-	mergeSortAnimationHelper(array, animations);
-	return animations;
+//how can you have animations
+
+export function getMergeSortAnimations(array){
+	const mergeSortAnimations = new Array;
+	console.log(mergeSortAnimations)
+	let newArrayAndAnimations = [];
+	newArrayAndAnimations = mergeSortAnimationHelper(array, mergeSortAnimations);
+	console.log("finished merge sort");
+	console.log(newArrayAndAnimations[0]);
+	return newArrayAndAnimations[1];
 }
 
-function mergeSortAnimationHelper(array, animations){
-	// if (array.length <= 1){
-	// 	const currentArrayandAnimations =[];
-	// 	currentArrayandAnimations.push(array);
-	// 	currentArrayandAnimations.push(animations);
-	// 	return currentArrayandAnimations;
-	// }
+export function mergeSortAnimationHelper(array, animations){
+	console.log("animations");
+	console.log(animations);
+	if (array.length == 1){
+		console.log("array is of length 1");
+		const currentArrayandAnimations =[];
+		currentArrayandAnimations.push(new Array(array[0]), animations);
+		console.log(array[0]); 
+		console.log(currentArrayandAnimations);
+		return currentArrayandAnimations;
+	}
 
-	// const middleIndex = Math.floor(array.length()/2);
-	// const auxArray = array.slice();
-	// const leftArray = auxArray.slice(0,middleIndex);
-	// const rightArray = auxArray.slice(middleIndex,);
+	else if(array.length == 0){
+		console.log("array is of length 0");
+		const currentArrayandAnimations =[];
+		currentArrayandAnimations.push(new Array (array), animations); 
+		console.log(array); 
+		return currentArrayandAnimations;
+	}
 
-	// //returns the sorted array and animations respectively in one array
-	// const leftArrayandAnimations = mergeSortAnimationHelper(leftArray, animations);
-	// const rightArrayandAnimations = mergeSortAnimationHelper(rightArray, animations);
+	console.log("This is after 0 and 1 check"); 
+	console.log(array);
 
-	// //index 0 has the current sorted array and array 1 has the current animations
-	// const leftCurrentSortedArray = leftArrayandAnimations[0];
-	// const rightCurrentSortedArray = rightArrayandAnimations[0];
-	// const leftIndex = 0;
-	// const rightIndex = 0;
-	// const mergedArray = [];
+	const middleIndex = Math.floor(array.length/2);
+	let auxArray = array.slice();
+	const leftArray = auxArray.slice(0,middleIndex);
 
-	// //XCurrentSortedArray is an array of value index pairs repsectively
-	// //index 0: value, index 1: index
-	// while(leftIndex < leftCurrentSortedArray.length || rightIndex < rightCurrentSortedArray){
+	const rightArray = auxArray.slice(middleIndex,);
 
-	// 	//i
-	// 	if (leftCurrentSortedArray[leftIndex][0] <= rightCurrentSortedArray[rightIndex][0]){
-	// 		//if the left value has an index that is less than the right value,
-	// 		//it is already in the right place in the in place array.
-	// 		if(leftCurrentSortedArray[leftIndex][1] < rightCurrentSortedArray[rightIndex][1]){
+	//returns the sorted array and animations respectively in one array
+	const leftArrayandAnimations = mergeSortAnimationHelper(leftArray, animations);
+	console.log("returning from left recursive call");
+	console.log(leftArrayandAnimations);
+	const rightArrayandAnimations = mergeSortAnimationHelper(rightArray, animations);
+	console.log("returning from right recursive call");
+	console.log(rightArrayandAnimations);
 
-	// 			//push the value index pair into the merged array and 
-	// 			//do not switch the index's for the compared values
-	// 			mergedArray.push(leftCurrentSortedArray[leftIndex]);
-	// 			animations.push
 
-	// 		}
-	// 	}
-	// }
+	//index 0 has the current sorted array and array 1 has the current animations
+	var leftCurrentSortedArray = leftArrayandAnimations[0];
+	console.log("leftCurrentSortedArray");
+	console.log(leftCurrentSortedArray);
+	var rightCurrentSortedArray = rightArrayandAnimations[0];
+	console.log("rightCurrentSortedArray");
+	console.log(rightCurrentSortedArray);
+
+	let leftIndex = 0;
+	let rightIndex = 0;
+	const mergedArray = [];
+
+	if (leftArrayandAnimations[0].length == 0){
+		while (rightIndex < rightCurrentSortedArray.length){
+			mergedArray.push(rightCurrentSortedArray[rightIndex]);
+			rightIndex++;
+		}
+
+		const newArrayAndAnimations = [];
+		newArrayAndAnimations.push(mergedArray,animations);
+		return newArrayAndAnimations; 
+	}
+
+	else if (rightArrayandAnimations[0].length == 0){
+		while(leftIndex < leftCurrentSortedArray.length){
+			mergedArray.push(leftCurrentSortedArray[leftIndex]);
+			leftIndex++;
+		}
+		const newArrayAndAnimations = [];
+		newArrayAndAnimations.push(mergedArray,animations);
+		return newArrayAndAnimations;
+	}
+
+
+	//XCurrentSortedArray is an array of value index pairs repsectively
+	//index 0: value, index 1: index
+
+	console.log("leftCurrentSortedArray.length");
+	console.log(leftCurrentSortedArray.length); 
+	while((leftIndex < leftCurrentSortedArray.length) && (rightIndex < rightCurrentSortedArray.length)){
+		console.log("leftCurrentSortedArray");
+		console.log(leftCurrentSortedArray); 
+		console.log("rightCurrentSortedArray");
+		console.log(rightCurrentSortedArray); 
+		//i
+		if (leftCurrentSortedArray[leftIndex][0] <= rightCurrentSortedArray[rightIndex][0]){
+
+			//push the value index pair into the merged array and 
+			//do not switch the index's for the compared values.
+			//push the same value index pair 
+			mergedArray.push(leftCurrentSortedArray[leftIndex]);
+			console.log("Left bar is less than right bar merged array");
+			console.log(mergedArray);
+
+			//push index of bars being compared
+			animations.push([leftCurrentSortedArray[leftIndex][1], rightCurrentSortedArray[rightIndex][1]]);
+
+			//push value and index of the left bar (unchanged)
+			animations.push(leftCurrentSortedArray[leftIndex]);
+
+			//push value and index of the right bar (unchanged)
+			animations.push(rightCurrentSortedArray[rightIndex]);
+
+			leftIndex ++;
+		
+		}
+		//need to make sure that if the indexes of the left side are filled,
+		//and that 
+
+		else if (rightCurrentSortedArray[rightIndex][0] < leftCurrentSortedArray[leftIndex][0]){
+			console.log("rightCurrentSortedArray[rightIndex][0]");
+			console.log(rightCurrentSortedArray[rightIndex][0]); 
+			console.log("leftCurrentSortedArray[rightIndex][0]");
+			console.log(leftCurrentSortedArray[rightIndex][0]); 
+			const newLeftBarValueIndexPair = [];
+			const newRightBarValueIndexPair = [];
+
+			//THIS IS WHERE IT IS BREAKING
+
+			//swap values of the right and left bars being compared
+			newLeftBarValueIndexPair.push(rightCurrentSortedArray[rightIndex][0], leftCurrentSortedArray[leftIndex][1]);
+			newRightBarValueIndexPair.push(leftCurrentSortedArray[leftIndex][0], rightCurrentSortedArray[rightIndex][1]);
+
+			//push the right bar into the merged array (with new index)
+			mergedArray.push(newLeftBarValueIndexPair);
+
+			console.log("right bar is less than left bar merged array");
+			console.log("newLeftBarValueIndexPair");
+			console.log(newLeftBarValueIndexPair);
+			console.log("newRightBarValueIndexPair");
+			console.log(newRightBarValueIndexPair);
+			console.log(mergedArray);
+
+			//replace the right bar that was being compared with left bar value
+
+			rightCurrentSortedArray[rightIndex]= newRightBarValueIndexPair;
+
+			leftCurrentSortedArray[leftIndex] = newLeftBarValueIndexPair;
+
+			//push indexes of bars being compared
+			animations.push([leftCurrentSortedArray[leftIndex][1], rightCurrentSortedArray[rightIndex][1]]);
+
+			//push value of left bar's new value index pair (index unchanged)
+			animations.push(newLeftBarValueIndexPair);
+
+			//push value of right bar's new value index pair (index unchanged)
+			animations.push(newRightBarValueIndexPair);
+
+			rightIndex ++;
+		}
+
+	}
+	console.log("Exited while loop");
+
+	if (leftIndex == leftCurrentSortedArray.length){
+		while (rightIndex < rightCurrentSortedArray.length){
+			mergedArray.push(rightCurrentSortedArray[rightIndex]);
+			rightIndex++;
+		}
+	}
+
+	else if (rightIndex == rightCurrentSortedArray.length){
+		while(leftIndex < leftCurrentSortedArray.length){
+			mergedArray.push(leftCurrentSortedArray[leftIndex]);
+			leftIndex++;
+		}
+	}
+
+	console.log(mergedArray);
+	const newArrayAndAnimations = [];
+	newArrayAndAnimations.push(mergedArray,animations);
+	return newArrayAndAnimations;
 
 
 }

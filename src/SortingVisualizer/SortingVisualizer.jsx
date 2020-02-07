@@ -2,8 +2,9 @@ import React from 'react';
 import './SortingVisualizer.css';
 import {getSwitchBarsAnimations} from '../SortingAlgorithms/SortingAlgorithms'
 import {getBubbleSortAnimations} from '../SortingAlgorithms/SortingAlgorithms'
+import {getMergeSortAnimations} from '../SortingAlgorithms/SortingAlgorithms'
 
-const NUMBER_OF_ARRAY_BARS = 10
+const NUMBER_OF_ARRAY_BARS = 8
 
 export default class SortingVisualizer extends React.Component {
 	constructor(props){
@@ -78,7 +79,10 @@ export default class SortingVisualizer extends React.Component {
 
 	}
 	//switch bars now complete
-
+	//TO DO:
+	//-change the way colors alternate so they do not
+	//flash so much
+	//-alternate colors if values are to be changed
 	bubbleSort(){
 		const {array} = this.state;
 		const animations = getBubbleSortAnimations(array);
@@ -151,6 +155,7 @@ export default class SortingVisualizer extends React.Component {
 
 		const arrayBars = document.getElementsByClassName('array-bar');
 		splittingAnimation(arrayBars);
+		getMergeSortAnimations(valueindexarray);
 
 		//with animations array, remember to put arrays that are being
 		//compared together (make margin 0 or 1 )
