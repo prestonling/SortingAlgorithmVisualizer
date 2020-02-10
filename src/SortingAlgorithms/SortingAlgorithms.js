@@ -71,11 +71,8 @@ export function getBubbleSortAnimations(array){
 		}
 	}
 	console.log("finished pushing animations");
-	console.log("test initializing empty array with empty array");
-	const testarray = [];
-	testarray.push(testarray);
-	console.log(testarray);
-	return animations;
+	console.log("testing pass by reference vs ");
+	
 }
 
 //function getMergeSortAnimations
@@ -120,7 +117,13 @@ export function mergeSortAnimationHelper(array, animations){
 	let auxArray = array.slice();
 	const leftArray = auxArray.slice(0,middleIndex);
 
+	console.log("left sliced array");
+	console.log(leftArray);
+
 	const rightArray = auxArray.slice(middleIndex,);
+
+	console.log("right sliced array");
+	console.log(rightArray);
 
 	//returns the sorted array and animations respectively in one array
 	const leftArrayandAnimations = mergeSortAnimationHelper(leftArray, animations);
@@ -164,9 +167,31 @@ export function mergeSortAnimationHelper(array, animations){
 		return newArrayAndAnimations;
 	}
 
+	console.log("merged array before while loop");
+		console.log(mergedArray);
 
 	//XCurrentSortedArray is an array of value index pairs repsectively
 	//index 0: value, index 1: index
+
+	//merging is not completely correct
+	//when merging 2 arrays of 2 elements or more,
+	//once you switch values of the left and
+	//right bars, they greater value is now not in the right
+	//order
+
+	//may need to use aux array to store values that are not 
+	//currently the smallest values
+
+	//if using an aux array, need to find a way to make animations
+	//correct
+
+	//IDEAS:
+	//1.) once the aux array is full, have animations just display
+	//	replace the elements that have been compared with the aux array
+	//2.) -highlight bars that are being compared
+	//	  -place bar that is of lower value into aux array
+	//	   and show animation
+	//
 
 	console.log("leftCurrentSortedArray.length");
 	console.log(leftCurrentSortedArray.length); 
@@ -181,6 +206,8 @@ export function mergeSortAnimationHelper(array, animations){
 			//push the value index pair into the merged array and 
 			//do not switch the index's for the compared values.
 			//push the same value index pair 
+			console.log("merged array before new push");
+			console.log(mergedArray);
 			mergedArray.push(leftCurrentSortedArray[leftIndex]);
 			console.log("Left bar is less than right bar merged array");
 			console.log(mergedArray);
@@ -203,19 +230,28 @@ export function mergeSortAnimationHelper(array, animations){
 		else if (rightCurrentSortedArray[rightIndex][0] < leftCurrentSortedArray[leftIndex][0]){
 			console.log("rightCurrentSortedArray[rightIndex][0]");
 			console.log(rightCurrentSortedArray[rightIndex][0]); 
-			console.log("leftCurrentSortedArray[rightIndex][0]");
-			console.log(leftCurrentSortedArray[rightIndex][0]); 
+			console.log("leftCurrentSortedArray[leftIndex][0]");
+			console.log(leftCurrentSortedArray[leftIndex][0]); 
 			const newLeftBarValueIndexPair = [];
 			const newRightBarValueIndexPair = [];
 
 			//THIS IS WHERE IT IS BREAKING
 
 			//swap values of the right and left bars being compared
+
+
 			newLeftBarValueIndexPair.push(rightCurrentSortedArray[rightIndex][0], leftCurrentSortedArray[leftIndex][1]);
 			newRightBarValueIndexPair.push(leftCurrentSortedArray[leftIndex][0], rightCurrentSortedArray[rightIndex][1]);
 
+			//contains left bar's value index pair but is not a reference to original 
+			//bars
+			const auxNewLeftBarValueIndexPair = Object.assign([], newLeftBarValueIndexPair);
+			const auxNewRightBarValueIndexPair = Object.assign([], newRightBarValueIndexPair); 
+			console.log("merged array before new push");
+			console.log(mergedArray);
+
 			//push the right bar into the merged array (with new index)
-			mergedArray.push(newLeftBarValueIndexPair);
+			mergedArray.push(auxNewLeftBarValueIndexPair);
 
 			console.log("right bar is less than left bar merged array");
 			console.log("newLeftBarValueIndexPair");
@@ -226,20 +262,23 @@ export function mergeSortAnimationHelper(array, animations){
 
 			//replace the right bar that was being compared with left bar value
 
-			rightCurrentSortedArray[rightIndex]= newRightBarValueIndexPair;
+			rightCurrentSortedArray[rightIndex]= auxNewRightBarValueIndexPair;
 
-			leftCurrentSortedArray[leftIndex] = newLeftBarValueIndexPair;
+			leftCurrentSortedArray[leftIndex] = auxNewLeftBarValueIndexPair;
 
 			//push indexes of bars being compared
 			animations.push([leftCurrentSortedArray[leftIndex][1], rightCurrentSortedArray[rightIndex][1]]);
 
 			//push value of left bar's new value index pair (index unchanged)
-			animations.push(newLeftBarValueIndexPair);
+			animations.push(auxNewLeftBarValueIndexPair);
 
 			//push value of right bar's new value index pair (index unchanged)
-			animations.push(newRightBarValueIndexPair);
+			animations.push(auxNewRightBarValueIndexPair);
 
-			rightIndex ++;
+			//increase left index again as you moved a right bar
+			//to the left, so need to add next lowest value to the 
+			//right of the just changed value
+			leftIndex ++;
 		}
 
 	}
